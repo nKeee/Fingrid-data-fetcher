@@ -12,6 +12,7 @@ Takes four arguments:
 
 Optional arguments:
 - -f filetype (filetype can be: csv, json or xml) Defaults to csv
+- -s (To enable saving results to a file)
 
 ## Example: 
 python FingridFetcher.py abc123abc 314 2023-06-01T00:00:00Z 2023-08-01T00:00:00Z -f json

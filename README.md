@@ -15,4 +15,5 @@ Optional arguments:
 - -s (To enable saving results to a file)
 
 ## Example: 
-python FingridFetcher.py abc123abc 314 2023-06-01T00:00:00Z 2023-08-01T00:00:00Z -f json
+python FingridFetcher.py abc123abc 314 2023-06-01T00:00:00Z 2023-08-01T00:00:00Z -f json -s
+This example fetches data in .json format and saves it into a corresponding fileformat (i.e. data_2023-10-09_183020).

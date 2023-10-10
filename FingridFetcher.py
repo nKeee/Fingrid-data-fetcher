@@ -11,7 +11,7 @@ from datetime import datetime
 def apiGet(api_key, variable_id, start_time, end_time, file_type):
 
     # Määritetään URL, endpoint, header-tiedot ja parametrit
-    base_url = "https://api.fingrid.fi"
+    base_url = "https://api.fingrid.fii"
     endpoint = f"/v1/variable/{variable_id}/events/{file_type}"
     headers = {
         "x-api-key": api_key
@@ -34,7 +34,7 @@ def apiGet(api_key, variable_id, start_time, end_time, file_type):
             print(f"Virhe API-endpointissa: {e}")
 
 
-# Tallennetaan saatu data tiedostoon, jos argumentti -s on käytössä.
+# Tallennetaan hakutulos tiedostotyypin mukaiseen tiedostoon
 def saveToFile(response, file_type):
 
     # Haetaan hakuhetki ja muotoillaan tiedostonimi sen mukaan
@@ -104,9 +104,11 @@ def main():
     
     # Suoritetaan haku ja tallennetaan/tulostetaan argumenttien mukaisesti
     response = apiGet(args.api_key, args.variable_id, args.start_time, args.end_time, args.f)
-    if args.save and response != None:
+    if response is None:
+        return
+    if args.save:
         saveToFile(response, args.f)
-    elif response != None:
+    else:
         printResult(response, args.f)
 
 if __name__ == "__main__":

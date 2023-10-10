@@ -6,6 +6,8 @@ import xml.dom.minidom
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
+
+# RESTful API GET -pyyntö
 def apiGet(api_key, variable_id, start_time, end_time, file_type):
 
     # Määritetään URL, endpoint, header-tiedot ja parametrit
@@ -19,16 +21,20 @@ def apiGet(api_key, variable_id, start_time, end_time, file_type):
         "start_time": start_time,
         "end_time": end_time,
     }
+    try:
+        response = requests.get(base_url + endpoint, headers=headers, params=params)
     
-    response = requests.get(base_url + endpoint, headers=headers, params=params)
-    
-    # Palautetaan onnistunut tulos, tai näytetään virhekoodi
-    if response.status_code == 200:
-        return response
+        # Palautetaan onnistunut tulos, tai näytetään virhekoodi
+        if response.status_code == 200:
+            return response
 
-    else:
-        print(f"Virhe {response.status_code}: Tietojen hakeminen epäonnistui")
+        else:
+            print(f"Virhe {response.status_code}: Tietojen hakeminen epäonnistui")
+    except requests.exceptions.RequestException as e:
+            print(f"Virhe API-endpointissa: {e}")
 
+
+# Tallennetaan saatu data tiedostoon, jos argumentti -s on käytössä.
 def saveToFile(response, file_type):
 
     # Haetaan hakuhetki ja muotoillaan tiedostonimi sen mukaan
@@ -49,9 +55,10 @@ def saveToFile(response, file_type):
 
     print(f"Tiedot tallennettu tiedostoon: data_{timestamp}.{file_type}")
 
+
+# Tulostetaan hakutulos tiedostotyypin mukaan
 def printResult(response, file_type):
 
-    # Tulostetaan hakutulos tiedostotyypin mukaan
     match file_type:
         case 'json':
             try:
@@ -78,6 +85,8 @@ def printResult(response, file_type):
             except Exception as e:
                 print(f"XML Formatting Error: {e}")
 
+
+
 def main():
     parser = argparse.ArgumentParser(description="Hae aikasarjan tiedot Fingridin palvelusta")
 
@@ -95,9 +104,9 @@ def main():
     
     # Suoritetaan haku ja tallennetaan/tulostetaan argumenttien mukaisesti
     response = apiGet(args.api_key, args.variable_id, args.start_time, args.end_time, args.f)
-    if args.save:
+    if args.save and response != None:
         saveToFile(response, args.f)
-    else:
+    elif response != None:
         printResult(response, args.f)
 
 if __name__ == "__main__":

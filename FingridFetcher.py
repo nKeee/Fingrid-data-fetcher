@@ -11,7 +11,7 @@ from datetime import datetime
 def apiGet(api_key, variable_id, start_time, end_time, file_type):
 
     # Määritetään URL, endpoint, header-tiedot ja parametrit
-    base_url = "https://api.fingrid.fii"
+    base_url = "https://api.fingrid.fi"
     endpoint = f"/v1/variable/{variable_id}/events/{file_type}"
     headers = {
         "x-api-key": api_key

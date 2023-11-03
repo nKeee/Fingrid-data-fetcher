@@ -3,7 +3,6 @@ Fetches info from [Fingrids API](https://data.fingrid.fi/fi/pages/api) and saves
 
 Uses [requests](https://pypi.org/project/requests/) (pip install requests)
 
-Originally made for Ready Solutions Oy
 
 ## Arguments
 Takes four arguments:
